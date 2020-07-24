@@ -9,10 +9,8 @@ var mongoose = require('mongoose'),
 var url = 'https://entv3-200.totalegame.net/?WSDL';
   exports.add_account = function(req, res) {
   var guid = "";
+  var data = req.body;
 
-
-
-  
   soap.createClientAsync(url).then((client) => {
     // Authentication
     var args = {
@@ -26,12 +24,12 @@ var url = 'https://entv3-200.totalegame.net/?WSDL';
     soap.createClientAsync(url).then((client) => {
     // Add Account
       var acc_args = {
-        "password": "123456a789",
-        "firstName": "Abryy Abry",
-        "lastName": "Abryy abry",
-        "email": "abry373a@gmail.com",
-        "BettingProfileId": "101",
-        "currency": "5"
+        "password": data.password,
+        "firstName": data.firstName,
+        "lastName": data.lasatName,
+        "email": data.email,
+        "BettingProfileId": data.profileId,
+        "currency": data.currency
       };
 
       var soapHeader = {

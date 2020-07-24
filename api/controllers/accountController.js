@@ -44,53 +44,47 @@ exports.add_account = function(req, res) {
 
   
   soap.createClientAsync(url).then((client) => {
-     var args = {
-        //"IsAuthenticate": {
-          //"-xmlns": "https://entservices.totalegame.net",
-          "loginName": "api234446",
-          "pinCode": "885dc2"
-        //}
-     };
+    var args = {
+      "loginName": "api234446",
+      "pinCode": "885dc2"
+    };
     return client.IsAuthenticate(args);
   }).then((result) => {
-console.log(result);
-    guid = result.IsAuthenticateResult.SessionGUID;
+    console.log(result);
+    // guid = result.IsAuthenticateResult.SessionGUID;
 
-  // Add Account
-  soap.createClient(url, function(err, client) {
-      let acc_args = {
-        //"AddAccount": {
-          //"-xmlns": "https://entservices.totalegame.net",
-          "password": "123456789",
-          "firstName": "Abry33",
-          "lastName": "DV2",
-          "email": "abry33a@test.com",
-          "BettingProfileId": "1",
-          "currency": "1"
-        //}
-      };
+    // Add Account
+    // soap.createClient(url, function(err, client) {
+    //     let acc_args = {
+    //       "password": "123456789",
+    //       "firstName": "Abry33",
+    //       "lastName": "DV2",
+    //       "email": "abry33a@test.com",
+    //       "BettingProfileId": "1",
+    //       "currency": "1"
+    //     };
 
-      //client.addHttpHeader('soapAction',
-        //`https://entservices.totalegame.net/AddAccount`);
+    //   //client.addHttpHeader('soapAction',
+    //     //`https://entservices.totalegame.net/AddAccount`);
 
-      var soapHeader = {
-        "AgentSession": {
-          //"-xmlns": "https://entservices.totalegame.net",
-          "SessionGUID": guid,
-          "ErrorCode": "0",
-          "IPAddress": "119.9.104.93",
-          "IsExtendSession": "true"
-        }
-      }
+    //   var soapHeader = {
+    //     "AgentSession": {
+    //       //"-xmlns": "https://entservices.totalegame.net",
+    //       "SessionGUID": guid,
+    //       "ErrorCode": "0",
+    //       "IPAddress": "119.9.104.93",
+    //       "IsExtendSession": "true"
+    //     }
+    //   }
 
-      client.addSoapHeader(soapHeader);
+    //   client.addSoapHeader(soapHeader);
 
-      client.AddAccount(acc_args, function(err, result) {
-console.log(client);
-          //console.log(result);
-          //console.log(err);
-      });
-  });
+    //   client.AddAccount(acc_args, function(err, result) {
+    //       console.log(client);
+    //       //console.log(result);
+    //       //console.log(err);
+    //   });
+    // });
   });
 
   // Save to DB

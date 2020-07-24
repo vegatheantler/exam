@@ -9,15 +9,21 @@ var AccountSchema = new Schema({
   },
   FirstName: {
     type: String,
+    required: true,
   },
   LastName: {
     type: String,
+    required: true,
   },
   PinCode: {
     type: String,
+    required: true,
+    min: 6,
+    max: 12,
   },
   ProfileId: {
     type: Number,
+    required: true,
   },
 });
 

@@ -4,21 +4,24 @@ var Schema = mongoose.Schema;
 
 
 var AccountSchema = new Schema({
-  name: {
+  firstName: {
     type: String,
-    required: 'Kindly enter the name of the Account'
   },
-  Created_date: {
-    type: Date,
-    default: Date.now
+  lastName: {
+    type: String,
   },
-  status: {
-    type: [{
-      type: String,
-      enum: ['pending', 'ongoing', 'completed']
-    }],
-    default: ['pending']
-  }
+  password: {
+    type: String,
+  },
+  email: {
+    type: String,
+  },
+  BettingProfileId: {
+    type: Number,
+  },
+  currency: {
+    type: Number,
+  },
 });
 
 module.exports = mongoose.model('Accounts', AccountSchema);

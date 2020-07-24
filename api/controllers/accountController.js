@@ -21,7 +21,6 @@ var url = 'https://entv3-200.totalegame.net/?WSDL';
     };
     return client.IsAuthenticateAsync(args);
   }).then((result) => {
-    console.log(result[0]);
     guid = result[0].IsAuthenticateResult.SessionGUID;
 
     // Add Account
@@ -49,6 +48,7 @@ var url = 'https://entv3-200.totalegame.net/?WSDL';
        client.AddAccount(acc_args, function(err, result) {
           // Save to DB
           var new_account = new Account(result.AddAccountResult);
+console.log(new_account);
           new_account.save(function(err, account) {
             if (err)
               res.send(err);

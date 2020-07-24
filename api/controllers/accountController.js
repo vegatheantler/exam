@@ -10,6 +10,7 @@ var url = 'https://entv3-200.totalegame.net/?WSDL';
   exports.add_account = function(req, res) {
   var guid = "";
   var data = req.body;
+console.log(req.body);
 
   soap.createClientAsync(url).then((client) => {
     // Authentication
@@ -24,12 +25,12 @@ var url = 'https://entv3-200.totalegame.net/?WSDL';
     soap.createClientAsync(url).then((client) => {
     // Add Account
       var acc_args = {
-        "password": data.password,
-        "firstName": data.firstName,
-        "lastName": data.lasatName,
-        "email": data.email,
-        "BettingProfileId": data.profileId,
-        "currency": data.currency
+        "password": data['password'],
+        "firstName": data['firstName'],
+        "lastName": data['lastName'],
+        "email": data['email'],
+        "BettingProfileId": data['profileId'],
+        "currency": data['currency']
       };
 
       var soapHeader = {

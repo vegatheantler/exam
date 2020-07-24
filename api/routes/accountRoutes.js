@@ -2,6 +2,6 @@
 module.exports = function(app) {
   var account = require('../controllers/accountController');
 
-  app.route('/addaccount')
+  app.route('/AddAccount')
     .post(account.add_account);
 };

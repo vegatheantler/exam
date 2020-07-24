@@ -6,32 +6,35 @@ var mongoose = require('mongoose'),
   convert = require('xml-js'),
   Account = mongoose.model('Accounts');
 
- var url = 'https://entv3-200.totalegame.net/';
-
+ var url = 'https://entv3-200.totalegame.net/?WSDL';
+ //var url = 'https://entservices.totalegame.net/';
 exports.add_account = function(req, res) {
-
   var guid = "";
 
   // Check login session
-  soap.createClient(url, function(err, client) {
-      var args = {
-        "IsAuthenticate": {
-          "-xmlns": "https://entservices.totalegame.net",
-          "loginName": "api234446",
-          "pinCode": "885dc2"
-        }
-      };
+  
+//  soap.createClient(url, function(err, client) {
+  //    var args = {
+        //"IsAuthenticate": {
+          //"-xmlns": "https://entservices.totalegame.net",
+    //      "loginName": "api234446",
+      //    "pinCode": "885dc2"
+        //}
+      //};
 
-      client.addHttpHeader('soapAction',
-        `https://entservices.totalegame.net/IsAuthenticate`);
+      //client.addHttpHeader('soapAction',
+        //`https://entservices.totalegame.net/IsAuthenticate`);
 
-      client.MyFunction(args, function(err, result) {
-          console.log(result);
-          let converted = JSON.parse(convert.xml2json(xml, {compact: true, spaces: 4}));
+      //client.IsAuthenticate(args, async function(err, result) {
+          //console.log(result);
+          //console.log(err.message);
+          //let converted = JSON.parse(convert.xml2json(result, {compact: true, spaces: 4}));
 
-          guid = converted.IsAuthenticateResult.SessionGUID._text;
-      });
-  });
+        //  guid = await result.IsAuthenticateResult.SessionGUID;
+         // console.log(guid);
+      //});
+ // });
+
 
    // <?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" 
    // xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body>
@@ -39,38 +42,55 @@ exports.add_account = function(req, res) {
  
 
 
+  
+  soap.createClientAsync(url).then((client) => {
+     var args = {
+        //"IsAuthenticate": {
+          //"-xmlns": "https://entservices.totalegame.net",
+          "loginName": "api234446",
+          "pinCode": "885dc2"
+        //}
+     };
+    return client.IsAuthenticate(args);
+  }).then((result) => {
+console.log(result);
+    guid = result.IsAuthenticateResult.SessionGUID;
+
   // Add Account
   soap.createClient(url, function(err, client) {
-      var args = {
-        "AddAccount": {
-          "-xmlns": "https://entservices.totalegame.net",
-          "password": "1234",
-          "firstName": "Abry2",
+      let acc_args = {
+        //"AddAccount": {
+          //"-xmlns": "https://entservices.totalegame.net",
+          "password": "123456789",
+          "firstName": "Abry33",
           "lastName": "DV2",
-          "email": "abry2@test.com",
+          "email": "abry33a@test.com",
           "BettingProfileId": "1",
           "currency": "1"
-        }
+        //}
       };
 
-      client.addHttpHeader('soapAction',
-        `https://entservices.totalegame.net/AddAccount`);
+      //client.addHttpHeader('soapAction',
+        //`https://entservices.totalegame.net/AddAccount`);
 
       var soapHeader = {
         "AgentSession": {
-          "-xmlns": "https://entservices.totalegame.net",
+          //"-xmlns": "https://entservices.totalegame.net",
           "SessionGUID": guid,
           "ErrorCode": "0",
           "IPAddress": "119.9.104.93",
           "IsExtendSession": "true"
         }
-      };
+      }
 
       client.addSoapHeader(soapHeader);
 
-      client.MyFunction(args, function(err, result) {
-          console.log(result);
+      client.AddAccount(acc_args, function(err, result) {
+console.log(client);
+          //console.log(result);
+          //console.log(err);
       });
+  });
   });
 
   // Save to DB

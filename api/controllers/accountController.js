@@ -6,8 +6,8 @@ var mongoose = require('mongoose'),
   convert = require('xml-js'),
   Account = mongoose.model('Accounts');
 
-var url = 'https://entv3-200.totalegame.net/?WSDL';
-  exports.add_account = function(req, res) {
+var url = process.env.API_ENDPOINT;
+exports.add_account = function(req, res) {
   var guid = "";
   var data = req.body;
 console.log(req.body);
@@ -15,8 +15,8 @@ console.log(req.body);
   soap.createClientAsync(url).then((client) => {
     // Authentication
     var args = {
-      "loginName": "api234446",
-      "pinCode": "885dc2"
+      "loginName": process.env.API_USER,
+      "pinCode": process.env.API_PASS
     };
     return client.IsAuthenticateAsync(args);
   }).then((result) => {
